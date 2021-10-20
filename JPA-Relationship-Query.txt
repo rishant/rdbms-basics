@@ -1,0 +1,23 @@
+https://www.youtube.com/watch?v=BM_lSZPMClo
+
+JPA	-
+	- Annotation
+		-	@Column(unique = true)
+		-	@JoinColumn()
+		-	@Embedded
+	- RelationShip
+		- OneToOne (BiDirection and UniDirection) + @JoinColumn() / @JoinTable()
+		- OneToMany (BiDirection and UniDirection) + @JoinColumn() / @JoinTable()
+		- ManyToOne (BiDirection and UniDirection) + @JoinColumn() / @JoinTable()
+		- ManyToMany (BiDirection and UniDirection) + @JoinColumn() / @JoinTable()
+	- Inheritance
+		- @MappedSuperClass
+		- @Inheritance(strategy = InheritanceStrategy)
+		
+		
+		
+@Query("select u from User u where u.firstname = :#{#user.firstname} or u.lastname = :#{#user.lastname}")
+Iterable<User> findByFirstnameOrLastname(User user);
+
+@Query("select u from User u where u.firstname = :name or u.lastname = :name")
+List<User> findByFirstnameOrLastname(String name);
