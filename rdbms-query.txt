@@ -1,0 +1,18 @@
+-- Optimization
+EXPLAIN SELECT salary FROM employee order by salary desc LIMIT 2,1;
+EXPLAIN FORMAT=JSON SELECT salary FROM employee order by salary desc LIMIT 2,1;
+
+--> LIMIT <offset>, <limit-count>
+1: Find 5 highest salary Start for offset 1 to <limit-count>
+SELECT salary
+FROM emp
+order by salary desc 
+LIMIT 5;
+-- Return resultset with 5 rows.
+
+2: find nth highest salary - using LIMIT <offset>, <limit-count>
+SELECT salary
+FROM emp
+order by salary desc 
+LIMIT N, 1;
+-- Return resultset with 1 row.
