@@ -1,0 +1,45 @@
+
+=============== ACID ===========================
+TRANSACTION_READ_UNCOMMITTED: 
+Problems: (Multi threaded we will face problems "Dirty reads", "Non Repeatable read" and "Phantom Read")
+Good Point: Performance is Faster
+
+TRANSACTION_READ_COMMITTED:
+Problems: (Multi threaded we will face problems "Non Repeatable read" and "Phantom Read")
+Good Point: Performance is little slow but we will solve problem "Dirty reads".
+
+TRANSACTION_REPEATABLE_READ:
+Problems: (Multi threaded we will face problems "Phantom Read")
+Good Point: Performance is little more slow but we will solve problem "Dirty reads" and "Non Repeatable read".
+
+TRANSACTION_SERIALIZABLE:
+Problems: (Multi threaded threads has to wait till 1 trancation complete and persist the state - No concurrency)
+Good Point: Performance is very slow but we will solve problem "Dirty reads", "Non Repeatable read" and "Phantom Read".
+=================================================
+
+Dirty Read: Transaction Level :: TRANSACTION_READ_UNCOMMITTED
+ 
+ T1: update product price = 1000 where productNo = 123;
+ mean while 
+ T2: select * from product where productNo = 123;
+ 
+Problem: After that T1: committed data means T2 is stil/old data or dirty read
+Solution: Transaction Level :: TRANSACTION_READ_COMMITTED
+
+Non Repeatable Reads: Transaction Level :: TRANSACTION_READ_COMMITTED
+	Step:1 - T1: select * from product where productNo = 123;
+    Step:2 - T2: update product price = 1000 where productNo = 123;
+	Step:3: - T2: Commit;
+ mean while 
+	Step:4 - T1: select * from product where productNo = 123;
+Problem: after T1 first time read T2 update data if T1 again try it will get diffrence in the state.
+Solution: Transaction Level :: TRANSACTION_REPEATABLE_READ
+
+Phantom Reads: Transaction Level :: TRANSACTION_REPEATABLE_READ
+	Step:1 - T1: select * from product where price > 2000;
+    Step:2 - T2: Insert into product(id,price) values(123,3000);
+	Step:3 - T2: commit;
+ mean while 
+	Step:4 - T1: select * from product where price > 2000;
+Problem: after T1 first time read T2 inserted new entry which is coming extra while T1 again try to select it will get diffrence list of records.
+Solution: Transaction Level :: TRANSACTION_SERIALIZABLE
